@@ -6,15 +6,10 @@ const list = document.querySelector(".gallery")
 
 list.insertAdjacentHTML("beforeend", createMarkup(galleryItems))
 
-list.addEventListener("click", handleClick)
-
-function handleClick(event) {
-    event.preventDefault()
-}
 
 const gallery = new SimpleLightbox('.gallery a', {
     captions: true,
-    captionsData: "alt", // Виберіть, звідки брати підписи
+    captionsData: "alt",
     captionDelay: 250,
 })
 

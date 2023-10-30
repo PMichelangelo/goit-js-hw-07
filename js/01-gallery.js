@@ -18,24 +18,38 @@ function handleClick(event) {
     const currentImage = event.target.closest(".gallery__item") 
     const currentIndex = Array.from(list.children).indexOf(currentImage);
     instance = basicLightbox.create(`
-    <div class="modal">
     <img
       class="gallery__image"
       src="${galleryItems[currentIndex].original}"
       alt="${galleryItems[currentIndex].description}"
-    />
-</div>`)
+    />`, {
+      onShow: (instance) => {
+        isModalOpened = true;
+        document.addEventListener("keydown", closeOnEscape)
+      },
+      onClose: (instance) => {
+        isModalOpened = false;
+        document.removeEventListener("keydown", closeOnEscape)
+      }
+    })
     
     instance.show();
-    isModalOpened = true;
 }
 
-document.addEventListener("keydown", function (event) {
-    if (event.key === "Escape" && isModalOpened) {
-        instance.close()
-        isModalOpened = false;
-    }
-})
+function closeOnEscape(event) {
+  if (event.key === "Escape" && isModalOpened) {
+    instance.close()
+  }
+
+  instance.off("close", closeOnEscape)
+}
+
+// document.addEventListener("keydown", function (event) {
+//     if (event.key === "Escape" && isModalOpened) {
+//         instance.close()
+//         isModalOpened = false;
+//     }
+// })
 
 function createMarkup(arr) {
     return arr.map(({ preview, original, description }) => `
