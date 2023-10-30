@@ -39,9 +39,8 @@ function handleClick(event) {
 function closeOnEscape(event) {
   if (event.key === "Escape" && isModalOpened) {
     instance.close()
+    document.removeEventListener("keydown", closeOnEscape)
   }
-
-  instance.off("close", closeOnEscape)
 }
 
 // document.addEventListener("keydown", function (event) {
